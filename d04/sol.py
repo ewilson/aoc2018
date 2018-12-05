@@ -9,6 +9,7 @@ TEST_DATA = True
 
 Entry = namedtuple('Entry', 'timestamp,event')
 
+
 class Shift:
     def __init__(self, guard_id, starttime):
         self.guard_id = guard_id
@@ -20,6 +21,7 @@ class Shift:
 
  
 Event = namedtuple('Event', 'timestamp,wake')
+
 
 def transformer(line):
     timestamp = datetime.strptime(line[1:17], '%Y-%m-%d %H:%M')
