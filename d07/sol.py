@@ -18,6 +18,12 @@ def build_graph(data):
     return prereqs
 
 
+def purge_step(graph, letter):
+    for element in graph:
+        graph[element].discard(letter)
+    del graph[letter]
+
+
 def solve(real):
     filename = 'd07/data.txt' if real else 'd07/test.txt'
     data = readfile(filename, transformer)
@@ -27,10 +33,7 @@ def solve(real):
         for letter in ascii_uppercase:
             if letter in graph and not graph[letter]:
                 steps.append(letter)
-                for el in graph:
-                    if letter in graph[el]:
-                        graph[el].remove(letter)
-                del graph[letter]
+                purge_step(graph, letter)
                 break
     return ''.join(steps)
 
