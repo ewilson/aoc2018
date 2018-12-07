@@ -4,11 +4,6 @@ from collections import defaultdict
 from common import readfile
 
 
-def transformer(line):
-    split_line = line.split()
-    return split_line[1], split_line[7]
-
-
 def build_graph(data):
     prereqs = defaultdict(set)
     for start, end in data:
@@ -24,9 +19,7 @@ def purge_step(graph, letter):
     del graph[letter]
 
 
-def solve(real):
-    filename = 'd07/data.txt' if real else 'd07/test.txt'
-    data = readfile(filename, transformer)
+def solve(data):
     graph = build_graph(data)
     steps = []
     while graph:
@@ -38,9 +31,14 @@ def solve(real):
     return ''.join(steps)
 
 
-def test():
-    return solve(False)
+def transformer(line):
+    split_line = line.split()
+    return split_line[1], split_line[7]
 
 
-def answer():
-    return solve(True)
+def get_test_data():
+    return readfile('d07/test.txt', transformer)
+
+
+def get_real_data():
+    return readfile('d07/data.txt', transformer)
