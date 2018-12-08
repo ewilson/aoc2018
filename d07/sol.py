@@ -96,7 +96,6 @@ def solve2(data, num_workers=5, minimum_step_time=60):
     graph = build_graph(data)
     time = 0
     team = Team(num_workers)
-    done = False
     while graph:
         available_workers = team.find_available_workers()
         jobs = [j for j in get_ready_jobs(graph, len(available_workers), team.find_active_jobs())]
