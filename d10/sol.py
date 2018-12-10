@@ -58,7 +58,6 @@ def solve(data):
         if abs(cur_dim[2] - cur_dim[3]) < 15:
             print_it = True
         if print_it:
-            input('ready')
             print_data(data)
             break
 
@@ -88,7 +87,7 @@ def print_data(data):
             if not point:
                 space += 1
                 print(' ', end='')
-        print(f'next: {x} -- {pound + space}')
+        print(f'next: {x} -- {pound + space} -- {pound}, {space}')
 
 
 def get_test_data():
