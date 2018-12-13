@@ -116,13 +116,23 @@ class World:
     def __repr__(self):
         return ' ' * (len(self.neg)-1) + '0' + 9*' ' + '0' + 9*' ' + '0\n' + ''.join(self.neg[:0:-1] + self.pos)
 
+    def minimal_str(self):
+        return ''.join(self.neg[:0:-1] + self.pos).strip('.')
+
 
 def solve(current, rules, num=20):
     w = World(list(current), None, rules)
-    max_neg = 0
+    patterns = {}
     for generation in range(num):
-        max_neg = len(w.neg) if len(w.neg) > max_neg else max_neg
+        if w.minimal_str() in patterns:
+            print('FOUND REPEAT', w.minimal_str(), generation, patterns[w.minimal_str()])
+            print(w.sum())
+        else:
+            patterns[w.minimal_str()] = generation
+            print(w.sum())
+
+
         w = w.iterate()
-    print('-', max_neg)
+
     return w
 
