@@ -6,6 +6,10 @@ def get_test_data():
     return readfile('d13/test.txt')
 
 
+def get_test_data2():
+    return readfile('d13/test2.txt')
+
+
 def get_real_data():
     return readfile('d13/data.txt')
 
@@ -58,6 +62,9 @@ class Location:
 
     def __repr__(self):
         return f'({self.point.x}, {self.point.y})'
+
+    def __eq__(self, other):
+        return self.point.x == other.point.x and self.point.y == other.point.y
 
 
 class Cart:
@@ -115,6 +122,9 @@ class Grid:
     def find_cart_order(self):
         return sorted(self.carts, key=lambda c: (c.y, c.x))
 
+    def remove(self, location):
+        self.carts = [c for c in self.carts if c.location != location]
+
     def __repr__(self):
         world = ''
         for y in range(self.height + 1):
@@ -158,12 +168,17 @@ def build_map(data):
 
 def solve(data):
     grid = build_map(data)
-    collision = None
-    while not collision:
+    while True:
         ordered_carts = grid.find_cart_order()
         for cart in ordered_carts:
             collision = cart.move()
             if collision:
+                cart.location.occupied = False
                 grid.remove(cart.location)
-                print(collision)
-                break
+        if len(ordered_carts) == 1:
+
+            last_cart = ordered_carts[0]
+            last_cart.move()
+            print(f"Last cart location: {last_cart.x}, {last_cart.y}")
+            break
+
