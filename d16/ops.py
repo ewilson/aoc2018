@@ -93,6 +93,7 @@ def eqrr(regs, a, b, c):
     cp_regs[c] = 1 if regs[a] == regs[b] else 0
     return cp_regs
 
+
 lookup = {
     'addr': addr,
     'addi': addi,
